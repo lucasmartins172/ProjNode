@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Lista de Alunos na disciplina de Linguagem de Programação I</title>
+  
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h1>Aula 05 - Gerenciamento de Alunos</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Matrícula</th>
+        <th>Nome do Aluno</th>
+        <th>Curso</th>
+        <th>Disciplina</th>
+        <th>Turma</th>
+        <th>Professor</th>
+        <th>Sala</th>
+        <th>Média</th>
+        <th>Situação</th>
+      </tr>
+    </thead>
+    <tbody id="tabela-alunos">
+      <!-- Os dados serão inseridos aqui via JavaScript -->
+    </tbody>
+  </table>
+
+  <script>
+    async function carregarAlunos() {
+      try {
+        const resposta = await fetch('/api/alunos');
+        const alunos = await resposta.json();
+
+        const tbody = document.getElementById('tabela-alunos');
+        tbody.innerHTML = '';
+
+        alunos.forEach(a => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${a.matricula ?? ''}</td>  
+            <td>${a.Nome_Aluno ?? ''}</td>
+            <td>${a.Curso ?? ''}</td>
+            <td>${a.Disciplina ?? ''}</td>
+            <td>${a.Turma ?? ''}</td>
+            <td>${a.Professor ?? ''}</td>
+            <td>${a.Sala ?? ''}</td>
+            <td>${a.Media ?? ''}</td>
+            <td>${a.Situacao ?? ''}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error('Erro ao carregar os alunos:', err);
+      }
+    }
+
+    carregarAlunos();
+  </script>
+</body>
+</html>
